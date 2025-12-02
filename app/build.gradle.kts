@@ -43,9 +43,6 @@ android {
 
 dependencies {
 
-    val lifecycle_version = "2.10.0"
-    val arch_version = "2.2.0"
-
     // ViewModel
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     // ViewModel utilities for Compose
