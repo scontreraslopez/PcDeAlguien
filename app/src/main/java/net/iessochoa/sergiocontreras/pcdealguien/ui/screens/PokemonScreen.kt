@@ -60,7 +60,7 @@ fun PokemonScreen(
             selectedValue = selectedGen.toString(),
             options = generations.map { it.toString() },
             label = "Generación",
-            onValueChangedEvent = { onGenerationSelection(selectedGen.toString()) }
+            onValueChangedEvent = onGenerationSelection
 
         )
 

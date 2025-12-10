@@ -20,15 +20,16 @@ import net.iessochoa.sergiocontreras.pcdealguien.ui.screens.PokemonViewModel
  */
 
 @Composable
-fun PokemonApp(
-    viewModel: PokemonViewModel = viewModel()
-    ) {
+fun PokemonApp( ) {
+    val viewModel: PokemonViewModel =
+        viewModel(factory = PokemonViewModel.Factory)
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         PokemonScreen(
-            uiState = viewModel.uiState.collectAsStateWithLifecycle().value,
+            uiState = uiState,
             onFetchClick = {viewModel.fetchPokemonByGeneration(uiState.selectedGeneration)},
-            onGenerationSelection = {viewModel.selectGeneration(uiState.selectedGeneration.toString())},
+            onGenerationSelection = {viewModel.selectGeneration(it)},
             modifier = Modifier.padding(innerPadding))
+
     }
 }

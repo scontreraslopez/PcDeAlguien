@@ -17,7 +17,9 @@ class DefaultAppContainer: AppContainer {
     //Empezamos a inicializar primero Retrofit, siempre lazy.
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
-            .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
+            .addConverterFactory(Json {
+                ignoreUnknownKeys = true
+            }.asConverterFactory("application/json".toMediaType()))
             .baseUrl(baseUrl)
             .build()
     }

@@ -1,12 +1,17 @@
 package net.iessochoa.sergiocontreras.pcdealguien.ui.screens
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import net.iessochoa.sergiocontreras.pcdealguien.PokemonApplication
 import net.iessochoa.sergiocontreras.pcdealguien.data.PokemonRepository
 
 class PokemonViewModel(
@@ -69,6 +74,16 @@ class PokemonViewModel(
 
             } catch (e: Exception) {
                 e.printStackTrace()
+            }
+        }
+    }
+
+    companion object {
+        val Factory: ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                val application = (this[APPLICATION_KEY] as PokemonApplication)
+                val pokemonRepository = application.container.pokemonRepository
+                PokemonViewModel(pokemonRepository = pokemonRepository)
             }
         }
     }
