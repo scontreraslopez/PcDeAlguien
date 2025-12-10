@@ -4,6 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 // TODO 1: Crear las Data Classes según el JSON de https://pokeapi.co/api/v2/generation/{id}/
+// 🟢 Done: Cuestion importante es que tenemos que decir que vamos a ignorar las que no cogemos del JSON en el archivo de configuracion AppContainer
 
 @Serializable
 data class GenerationsResponse(
