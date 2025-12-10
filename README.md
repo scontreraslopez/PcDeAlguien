@@ -28,18 +28,10 @@ El proyecto está construido utilizando las últimas prácticas recomendadas par
 * **Imágenes:**
     * [Coil 2.7.0](https://coil-kt.github.io/coil/) - Carga asíncrona de imágenes para Compose.
 * **Concurrencia:** Kotlin Coroutines & Flow.
+* **Navegación:** [Navigation 3](https://developer.android.com/guide/navigation/navigation-3/get-started)
 
 ## 🧩 Estructura del Proyecto
 
 El código sigue una estructura limpia para facilitar el mantenimiento:
+TODO
 
-```text
-com.example.pokepractice
-├── data/                  # Capa de Datos
-│   ├── network/           # Configuración de Retrofit (ApiService, Client)
-│   └── PokemonModels.kt   # Data classes (Modelos de respuesta API)
-├── ui/                    # Capa de UI (Presentación)
-│   ├── PokemonScreen.kt   # Composable principal con la UI
-│   ├── PokemonViewModel.kt# Lógica de negocio y llamadas asíncronas
-│   └── PokemonUiState.kt  # Estado de la pantalla (Loading, List, Error)
-└── MainActivity.kt        # Punto de entrada

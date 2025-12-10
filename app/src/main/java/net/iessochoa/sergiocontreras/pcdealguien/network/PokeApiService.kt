@@ -1,4 +1,4 @@
-package net.iessochoa.sergiocontreras.pcdealguien.data
+package net.iessochoa.sergiocontreras.pcdealguien.network
 
 interface PokeApiService {
     // TODO 2: Definir el endpoint

@@ -38,10 +38,13 @@ import net.iessochoa.sergiocontreras.pcdealguien.ui.theme.PCdeAlguienTheme
 import net.iessochoa.sergiocontreras.pcdealguien.ui.theme.Typography
 
 @Composable
-fun PokemonScreen(viewModel: PokemonViewModel = viewModel(), modifier: Modifier = Modifier) {
+fun PokemonScreen(
+    viewModel: PokemonViewModel = viewModel(),
+    modifier: Modifier = Modifier
+) {
+
     // Observamos el estado del ViewModel
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-
     val pokemonList = uiState.pokemonList
 
     // Variables para el Dropdown (UI ya resuelta)
