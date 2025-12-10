@@ -4,8 +4,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import net.iessochoa.sergiocontreras.pcdealguien.ui.PokemonScreen
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import net.iessochoa.sergiocontreras.pcdealguien.ui.screens.PokemonScreen
+import net.iessochoa.sergiocontreras.pcdealguien.ui.screens.PokemonViewModel
 
 /**
  * Project: PCdeAlguien
@@ -16,8 +20,15 @@ import net.iessochoa.sergiocontreras.pcdealguien.ui.PokemonScreen
  */
 
 @Composable
-fun PokemonApp() {
+fun PokemonApp(
+    viewModel: PokemonViewModel = viewModel()
+    ) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-        PokemonScreen(modifier = Modifier.padding(innerPadding))
+        PokemonScreen(
+            uiState = viewModel.uiState.collectAsStateWithLifecycle().value,
+            onFetchClick = {viewModel.fetchPokemonByGeneration(uiState.selectedGeneration)},
+            onGenerationSelection = {viewModel.selectGeneration(uiState.selectedGeneration.toString())},
+            modifier = Modifier.padding(innerPadding))
     }
 }

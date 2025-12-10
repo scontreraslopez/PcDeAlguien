@@ -1,4 +1,4 @@
-package net.iessochoa.sergiocontreras.pcdealguien.ui
+package net.iessochoa.sergiocontreras.pcdealguien.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,30 +24,28 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
-import net.iessochoa.sergiocontreras.pcdealguien.network.PokemonSpecies
+import net.iessochoa.sergiocontreras.pcdealguien.network.PokemonDto
 import net.iessochoa.sergiocontreras.pcdealguien.ui.components.DynamicSelectTextField
-import net.iessochoa.sergiocontreras.pcdealguien.ui.theme.PCdeAlguienTheme
 import net.iessochoa.sergiocontreras.pcdealguien.ui.theme.Typography
 
 @Composable
 fun PokemonScreen(
-    viewModel: PokemonViewModel = viewModel(),
+    uiState: PokemonUiState,
+    onFetchClick: (Int) -> Unit,
+    onGenerationSelection: (String) -> Unit,
     modifier: Modifier = Modifier
-) {
 
+) {
     // Observamos el estado del ViewModel
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val pokemonList = uiState.pokemonList
+    //val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val pokemonList = uiState.pokemons
+    val generationsCount = uiState.generations
+    val selectedGen = uiState.selectedGeneration
 
     // Variables para el Dropdown (UI ya resuelta)
-    var expanded by remember { mutableStateOf(false) }
-    var selectedGen by remember { mutableStateOf(1) }
-    val generations = (1..8).toList() // 8 Generaciones
+    val generations = (1..generationsCount).toList() // Generations
 
     Column(
         modifier = modifier.fillMaxSize().padding(16.dp),
@@ -62,9 +60,8 @@ fun PokemonScreen(
             selectedValue = selectedGen.toString(),
             options = generations.map { it.toString() },
             label = "Generación",
-            onValueChangedEvent = {
-                selectedGen = it.toInt()
-            }
+            onValueChangedEvent = { onGenerationSelection(selectedGen.toString()) }
+
         )
 
 
@@ -74,7 +71,7 @@ fun PokemonScreen(
         Button(
             onClick = {
                 // Llama al ViewModel
-                viewModel.fetchPokemonByGeneration(selectedGen)
+                onFetchClick(selectedGen)
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -98,7 +95,7 @@ fun PokemonScreen(
 }
 
 @Composable
-fun PokemonItem(pokemon: PokemonSpecies) {
+fun PokemonItem(pokemon: PokemonDto) {
     Card(
         elevation = CardDefaults.cardElevation(4.dp),
         colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5))
@@ -124,13 +121,5 @@ fun PokemonItem(pokemon: PokemonSpecies) {
                 style = MaterialTheme.typography.bodyMedium
             )
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PokemonScreenPreview() {
-    PCdeAlguienTheme {
-        PokemonScreen()
     }
 }
