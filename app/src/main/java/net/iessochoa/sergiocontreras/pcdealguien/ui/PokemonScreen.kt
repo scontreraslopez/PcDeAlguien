@@ -1,7 +1,6 @@
 package net.iessochoa.sergiocontreras.pcdealguien.ui
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,8 +14,6 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
-import net.iessochoa.sergiocontreras.pcdealguien.data.PokemonSpecies
+import net.iessochoa.sergiocontreras.pcdealguien.network.PokemonSpecies
 import net.iessochoa.sergiocontreras.pcdealguien.ui.components.DynamicSelectTextField
 import net.iessochoa.sergiocontreras.pcdealguien.ui.theme.PCdeAlguienTheme
 import net.iessochoa.sergiocontreras.pcdealguien.ui.theme.Typography

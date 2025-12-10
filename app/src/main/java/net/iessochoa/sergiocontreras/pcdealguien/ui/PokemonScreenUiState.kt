@@ -1,6 +1,6 @@
 package net.iessochoa.sergiocontreras.pcdealguien.ui
 
-import net.iessochoa.sergiocontreras.pcdealguien.data.PokemonSpecies
+import net.iessochoa.sergiocontreras.pcdealguien.network.PokemonSpecies
 
 
 data class PokemonScreenUiState (
