@@ -19,10 +19,9 @@ class PokemonViewModel(
 ) : ViewModel() {
 
     // Estado para la lista de pokemons. Arranca cargando y el resto lo de siempre
-    val _uiState = MutableStateFlow(PokemonUiState(
-        pokemons = listOf(),
-        isLoading = true,
-        ))
+    private val _uiState = MutableStateFlow(PokemonUiState(
+        requestStatus = RequestStatus.Loading //Arranca cargando
+    ))
     val uiState: StateFlow<PokemonUiState> = _uiState.asStateFlow()
 
     //Al init lo que hay que hacer es pescar las generations y con eso darle los valores al dropdown
@@ -39,12 +38,12 @@ class PokemonViewModel(
                     val generationsCount = generationList.count()
                     currentState.copy(
                         generations = generationsCount,
-                        isLoading = false
+                        requestStatus = RequestStatus.Idle
                     )
                 }
             } catch (e: Exception) {
                 _uiState.update { currentState ->
-                    currentState.copy(isError = true, isLoading = false)
+                    currentState.copy(requestStatus = RequestStatus.Error)
                 }
             }
         }
@@ -62,14 +61,14 @@ class PokemonViewModel(
             try {
                 // Primero lo ponemos a que está cargando
                 _uiState.update { currentState ->
-                    currentState.copy(isLoading = true)
+                    currentState.copy(requestStatus = RequestStatus.Loading)
                 }
                 // ahora cargamos los pokemons para esa generation
 
                  val pokemonList = pokemonRepository.getGenerationPokemons(generationId)
                 //Ahora actualizamos
                 _uiState.update { currentState ->
-                    currentState.copy(isLoading = false, pokemons = pokemonList)
+                    currentState.copy(requestStatus = RequestStatus.Success(pokemonList))
                 }
 
             } catch (e: Exception) {

@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,7 +41,7 @@ fun PokemonScreen(
 ) {
     // Observamos el estado del ViewModel
     //val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val pokemonList = uiState.pokemons
+    // Fijate que esto no puedo hacerlo por que no siempre habrá lista val pokemonList = uiState.requestStatus.pokemons
     val generationsCount = uiState.generations
     val selectedGen = uiState.selectedGeneration
 
@@ -80,19 +81,31 @@ fun PokemonScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // --- LISTA DE RESULTADOS ---
-        LazyVerticalGrid(
-            modifier = Modifier.weight(1f),
-            columns = GridCells.Fixed(2), // 2 columnas
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            items(pokemonList) { pokemon ->
-                PokemonItem(pokemon)
+        // --- LISTA DE RESULTADOS --- -> Función del estado
+        when (val status = uiState.requestStatus) {
+            is RequestStatus.Loading -> CircularProgressIndicator()
+            is RequestStatus.Error -> Text("Error")
+            is RequestStatus.Success -> {
+                // Aquí pintamos la lista
+                LazyVerticalGrid(
+                    modifier = Modifier.weight(1f),
+                    columns = GridCells.Fixed(2), // 2 columnas
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    items(status.pokemons) { pokemon ->
+                        PokemonItem(pokemon)
+                    }
+                }
             }
+
+            is RequestStatus.Idle -> Text("Selecciona una generación y pulsa buscar")
         }
+
+
     }
 }
+
 
 @Composable
 fun PokemonItem(pokemon: PokemonDto) {
