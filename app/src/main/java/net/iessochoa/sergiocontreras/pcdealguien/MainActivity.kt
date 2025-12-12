@@ -12,6 +12,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             PCdeAlguienTheme {
+                //* Configuration for the Minimal Firebase UI Auth */
+
                 PokemonApp()
             }
         }
