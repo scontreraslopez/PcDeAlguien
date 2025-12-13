@@ -14,12 +14,14 @@ interface AppContainer {
 class DefaultAppContainer: AppContainer {
     private val baseUrl = "https://pokeapi.co/api/v2/"
 
+    private val json = Json {
+        ignoreUnknownKeys = true
+    }
+
     //Empezamos a inicializar primero Retrofit, siempre lazy.
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
-            .addConverterFactory(Json {
-                ignoreUnknownKeys = true
-            }.asConverterFactory("application/json".toMediaType()))
+            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
             .baseUrl(baseUrl)
             .build()
     }
